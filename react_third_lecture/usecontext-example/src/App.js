@@ -14,11 +14,11 @@ function App() {
   };
   return (
     <div className="App">
-      <ThemeContext.Provider value={[theme,setTheme]}>
-			<p style={theme}>Hello World From app.js</p>
+      <ThemeContext.Provider value={[theme, setTheme]}>
+        <p style={theme}>Hello World From app.js</p>
         <ChildComponent />
       </ThemeContext.Provider>
-		<br/>
+      <br />
       <button onClick={toggleTheme}>Toggle Theme </button>
     </div>
   );

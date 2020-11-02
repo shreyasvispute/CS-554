@@ -13,8 +13,8 @@ const browsers = {
     base: 'BrowserStack',
     os: 'OS X',
     os_version: 'High Sierra',
-    browser : 'Chrome',
-    browser_version : 'latest'
+    browser: 'Chrome',
+    browser_version: 'latest'
   },
   firefoxMac: {
     base: 'BrowserStack',
@@ -72,11 +72,11 @@ const browsers = {
     device: 'Google Pixel 2',
     real_mobile: true
   }
-}
+};
 
-const browsersKeys = Object.keys(browsers)
+const browsersKeys = Object.keys(browsers);
 
 module.exports = {
   browsers,
   browsersKeys
-}
+};

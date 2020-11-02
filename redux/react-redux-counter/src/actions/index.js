@@ -1,7 +1,7 @@
 export const incrementCount = () => ({
-	type: 'INC'
+  type: 'INC'
 });
 
 export const decrementCount = () => ({
-	type: 'DEC'
+  type: 'DEC'
 });

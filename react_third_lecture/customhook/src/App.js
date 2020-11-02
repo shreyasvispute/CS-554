@@ -10,7 +10,11 @@ function App() {
         {loading
           ? 'Loading...'
           : data.map((show) => {
-              return <div key ={show.id}id={show.id}>{show.name}</div>;
+              return (
+                <div key={show.id} id={show.id}>
+                  {show.name}
+                </div>
+              );
             })}
       </div>
     </div>

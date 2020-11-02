@@ -114,13 +114,12 @@ const resolvers = {
       return employees.filter((e) => e.employerId === parentValue.id).length;
     },
     employees: (parentValue) => {
-		
       return employees.filter((e) => e.employerId === parentValue.id);
     }
   },
   Employee: {
     employer: (parentValue) => {
-			//console.log(`parentValue in Employee`, parentValue);
+      //console.log(`parentValue in Employee`, parentValue);
       return employers.filter((e) => e.id === parentValue.employerId)[0];
     }
   },
