@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 const initalState = [
   {
-    id: 1,
+    id: uuid(),
     task: 'Pay Cable Bill',
     taskDesc: 'Pay Cable Bill by the 15th',
     completed: false

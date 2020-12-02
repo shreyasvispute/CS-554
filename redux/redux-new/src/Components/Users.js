@@ -5,7 +5,7 @@ import AddUser from './AddUser';
 const Users = () => {
   const [add, setAdd] = useState(false);
   const allUsers = useSelector((state) => state.users);
-  console.log('allTodos:', allUsers);
+  console.log('allUsers:', allUsers);
   return (
     <div className="todos-wrapper">
       <h2>Users</h2>
