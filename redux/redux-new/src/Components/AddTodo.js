@@ -10,6 +10,8 @@ const AddTodo = (props) => {
 
   const addTodo = () => {
     dispatch(actions.addTodo(data.task, data.taskDesc));
+    document.getElementById('task').value = '';
+    document.getElementById('taskDesc').value = '';
   };
   return (
     <div className={'add'}>
@@ -18,6 +20,7 @@ const AddTodo = (props) => {
           Todo:
           <input
             onChange={(e) => handleChange(e)}
+            id="task"
             name="task"
             placeholder="Todo Name...."
           />
@@ -28,6 +31,7 @@ const AddTodo = (props) => {
           Todo Description:
           <input
             onChange={(e) => handleChange(e)}
+            id="taskDesc"
             name="taskDesc"
             placeholder="Description...."
           />

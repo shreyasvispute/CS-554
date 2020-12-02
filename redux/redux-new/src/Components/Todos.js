@@ -11,10 +11,11 @@ const Todos = () => {
       <h2>My Todos</h2>
       <button onClick={() => setAdd(!add)}>Add Todo</button>
       <br />
-
       <br />
       <br />
       {add && <AddTodo />}
+      <br />
+
       {allTodos.map((todo) => {
         console.log(todo);
         return <Todo key={todo.id} todo={todo} />;
