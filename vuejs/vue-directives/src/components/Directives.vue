@@ -10,11 +10,11 @@
     <span v-if="btnDisabled">Span: The Button is disabled</span>
     <span v-else>Span: The button is enabled</span>
     <br />
-    <button v-on:click="changeName" :disabled="btnDisabled">Change Name</button>
-
+    <button v-on:click="changeName" v-bind:disabled="btnDisabled">Change Name</button>
+	<button v-on:click="toggleBtn" >Toggle Button</button>
     <br />
     <ul>
-      <li v-for="(fruit) in fruits" :key="fruit">{{fruit}}</li>
+      <li v-for="(fruit) in fruits" v-bind:key="fruit">{{fruit}}</li>
     </ul>
   </div>
 </template>
@@ -36,10 +36,13 @@ export default {
     changeName() {
       if (this.name === "Patrick") {
         this.name = "John";
-      } else {
+      } else if (this.name ==="John"){
         this.name = "Patrick";
       }
-    }
+		},
+		toggleBtn(){
+			this.btnDisabled=!this.btnDisabled
+		}
   }
 };
 </script>

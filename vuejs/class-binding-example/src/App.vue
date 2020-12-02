@@ -8,7 +8,11 @@
     <div
       :style="{backgroundColor: bgColor, width: bgWidth, height: bgHeight, border:bgBorder }"
     >Test Alert Object Class</div>
+ 
+		
   </div>
+
+	
 </template>
 
 <script>

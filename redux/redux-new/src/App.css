@@ -1,0 +1,22 @@
+.App h1 {
+	text-align: center;
+}
+.App .workouts-wrapper {
+	margin-left: 30px;
+}
+.App .workouts-wrapper .activity-wrapper {
+	display: flex;
+	align-items: center;
+}
+.App .workouts-wrapper .activity-wrapper button {
+	margin-left: 20px;
+}
+.App .workouts-wrapper .add {
+	display: flex;
+	align-items: flex-end;
+}
+.App .workouts-wrapper .add .input-section {
+	margin-right: 20px;
+}
+
+/*# sourceMappingURL=App.css.map */

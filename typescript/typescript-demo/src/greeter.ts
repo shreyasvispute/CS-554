@@ -9,4 +9,5 @@ Greeter.prototype.greet = function() {
 
 let greeter = new Greeter('World');
 
+console.log (greeter)
 console.log(greeter.greet());
