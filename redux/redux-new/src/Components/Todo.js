@@ -45,12 +45,6 @@ const Todo = (props) => {
           </tr>
         </tbody>
       </table>
-      {/* <p>
-				Task: {props.todo.task}, Task Description: {props.todo.taskDesc}, Completed: {`${props.todo.completed}`}
-			</p>
-			<button onClick={deleteTodo}>Delete</button>
-			{!props.todo.completed && <button onClick={() => completeTodoToggle('comp')}>Complete</button>}
-			{props.todo.completed && <button onClick={() => completeTodoToggle('uncomp')}>UnComplete</button>} */}
     </div>
   );
 };
