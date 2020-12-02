@@ -12,17 +12,45 @@ const Todo = (props) => {
   };
   return (
     <div className={'activity-wrapper'}>
-      <p>
-        Task: {props.todo.task}, Task Description: {props.todo.taskDesc},
-        Completed: {`${props.todo.completed}`}
-      </p>
-      <button onClick={deleteTodo}>Delete</button>
-      {!props.todo.completed && (
-        <button onClick={() => completeTodoToggle('comp')}>Complete</button>
-      )}
-      {props.todo.completed && (
-        <button onClick={() => completeTodoToggle('uncomp')}>UnComplete</button>
-      )}
+      <table>
+        <tbody>
+          <tr>
+            <td>Task:</td>
+            <td>{props.todo.task}</td>
+          </tr>
+          <tr>
+            <td>Task Description:</td>
+            <td>{props.todo.taskDesc}</td>
+          </tr>
+          <tr>
+            <td>Completed:</td>
+            <td>{`${props.todo.completed}`}</td>
+          </tr>
+          <tr>
+            <td>
+              <button onClick={deleteTodo}>Delete</button>
+            </td>
+            <td>
+              {!props.todo.completed && (
+                <button onClick={() => completeTodoToggle('comp')}>
+                  Complete
+                </button>
+              )}
+              {props.todo.completed && (
+                <button onClick={() => completeTodoToggle('uncomp')}>
+                  UnComplete
+                </button>
+              )}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {/* <p>
+				Task: {props.todo.task}, Task Description: {props.todo.taskDesc}, Completed: {`${props.todo.completed}`}
+			</p>
+			<button onClick={deleteTodo}>Delete</button>
+			{!props.todo.completed && <button onClick={() => completeTodoToggle('comp')}>Complete</button>}
+			{props.todo.completed && <button onClick={() => completeTodoToggle('uncomp')}>UnComplete</button>} */}
     </div>
   );
 };
