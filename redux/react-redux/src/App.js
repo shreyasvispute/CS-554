@@ -2,6 +2,10 @@ import './App.css';
 import Todos from './Components/Todos';
 import Users from './Components/Users';
 import All from './Components/All';
+import store from './store';
+store.subscribe(() => {
+  console.log('State Changed', store.getState());
+});
 function App() {
   return (
     <div className="App">

@@ -5,6 +5,7 @@ import AddTodo from './AddTodo';
 const Todos = () => {
   const [add, setAdd] = useState(false);
   const allTodos = useSelector((state) => state.todos);
+
   console.log('allTodos:', allTodos);
   return (
     <div className="todo-wrapper">
