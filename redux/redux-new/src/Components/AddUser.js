@@ -1,45 +1,46 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from '../actions';
-const AddTodo = (props) => {
+const AddUser = (props) => {
   const dispatch = useDispatch();
-  const [data, setData] = useState({ task: '', taskDesc: '' });
+  const [data, setData] = useState({ name: '', email: '' });
   const handleChange = (e) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const addTodo = () => {
-    dispatch(actions.addTodo(data.task, data.taskDesc));
-    document.getElementById('task').value = '';
-    document.getElementById('taskDesc').value = '';
+  const addUser = () => {
+    dispatch(actions.addUser(data.name, data.email));
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
   };
   return (
     <div className="add">
       <div className="input-selection">
         <label>
-          Todo:
+          Name:
           <input
             onChange={(e) => handleChange(e)}
-            id="task"
-            name="task"
-            placeholder="Todo Name...."
+            id="name"
+            name="name"
+            placeholder="Name...."
           />
         </label>
       </div>
       <div className="input-selection">
         <label>
-          Todo Description:
+          Email:
           <input
+            type="email"
             onChange={(e) => handleChange(e)}
-            id="taskDesc"
-            name="taskDesc"
-            placeholder="Description...."
+            id="email"
+            name="email"
+            placeholder="Email...."
           />
         </label>
       </div>
-      <button onClick={addTodo}>Add Todo</button>
+      <button onClick={addUser}>Add user</button>
     </div>
   );
 };
 
-export default AddTodo;
+export default AddUser;

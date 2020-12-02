@@ -11,7 +11,7 @@ const Todo = (props) => {
     if (type === 'uncomp') dispatch(actions.uncompleteTodo(props.todo.id));
   };
   return (
-    <div className={'activity-wrapper'}>
+    <div className="todo-wrapper">
       <table>
         <tbody>
           <tr>

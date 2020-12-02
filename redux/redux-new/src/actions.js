@@ -22,9 +22,24 @@ const uncompleteTodo = (id) => ({
   payload: { id: id }
 });
 
+const addUser = (name, email) => ({
+  type: 'CREATE_USER',
+  payload: {
+    name: name,
+    email: email
+  }
+});
+
+const deleteUser = (id) => ({
+  type: 'DELETE_USER',
+  payload: { id: id }
+});
+
 module.exports = {
   addTodo,
   deleteTodo,
   completeTodo,
-  uncompleteTodo
+  uncompleteTodo,
+  addUser,
+  deleteUser
 };

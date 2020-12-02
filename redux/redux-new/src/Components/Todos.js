@@ -7,7 +7,7 @@ const Todos = () => {
   const allTodos = useSelector((state) => state.todos);
   console.log('allTodos:', allTodos);
   return (
-    <div className={'workouts-wrapper'}>
+    <div className="todo-wrapper">
       <h2>My Todos</h2>
       <button onClick={() => setAdd(!add)}>Add Todo</button>
       <br />
