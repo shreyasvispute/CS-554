@@ -1,7 +1,9 @@
 import { useDispatch } from 'react-redux';
 import actions from '../actions';
-const User = (props) => {
+
+function User(props) {
   const dispatch = useDispatch();
+
   const deleteUser = () => {
     dispatch(actions.deleteUser(props.user.id));
   };
@@ -15,19 +17,19 @@ const User = (props) => {
             <td>{props.user.name}</td>
           </tr>
           <tr>
-            <td>Email:</td>
+            <td>Email</td>
             <td>{props.user.email}</td>
           </tr>
 
           <tr>
             <td>
-              <button onClick={deleteUser}>Delete</button>
+              <button onClick={deleteUser}>Delete User</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   );
-};
+}
 
 export default User;

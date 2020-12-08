@@ -1,21 +1,21 @@
 .App h1 {
 	text-align: center;
 }
-.App .workouts-wrapper {
+.App .todos-wrapper {
 	margin-left: 30px;
 }
-.App .workouts-wrapper .activity-wrapper {
+.App .todos-wrapper .todo-wrapper {
 	display: flex;
 	align-items: center;
 }
-.App .workouts-wrapper .activity-wrapper button {
+.App .todos-wrapper .todo-wrapper button {
 	margin-left: 20px;
 }
-.App .workouts-wrapper .add {
+.App .todos-wrapper .add {
 	display: flex;
 	align-items: flex-end;
 }
-.App .workouts-wrapper .add .input-section {
+.App .todos-wrapper .add .input-section {
 	margin-right: 20px;
 }
 

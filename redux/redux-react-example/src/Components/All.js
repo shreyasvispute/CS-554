@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import actions from '../actions';
+
 const All = () => {
   const dispatch = useDispatch();
   const allState = useSelector((state) => state);
@@ -11,7 +11,6 @@ const All = () => {
       <h3>Todos</h3>
       <ul>
         {allState.todos.map((todo) => {
-          console.log(todo);
           return <li key={todo.id}>{todo.task}</li>;
         })}
       </ul>
@@ -19,24 +18,27 @@ const All = () => {
       <button
         onClick={() =>
           dispatch(
-            actions.addTodo('Task Added From All Comp', 'How now Brown Cow')
+            actions.addTodo(
+              'Task Added from ALL component',
+              'How now brown cow?'
+            )
           )
         }
       >
         Add Task
       </button>
+
       <hr />
       <h3>Users</h3>
       <ul>
         {allState.users.map((user) => {
-          console.log(user);
           return <li key={user.id}>{user.name}</li>;
         })}
       </ul>
       <br />
       <button
         onClick={() =>
-          dispatch(actions.addUser('Carole Baskin', 'purrrfect@tigerking.com'))
+          dispatch(actions.addUser('Mickey Mouse', 'MMouse@disney.com'))
         }
       >
         Add User

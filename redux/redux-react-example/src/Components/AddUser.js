@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import actions from '../actions';
-const AddUser = (props) => {
-  const dispatch = useDispatch();
-  const [data, setData] = useState({ name: '', email: '' });
-  const handleChange = (e) => {
-    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
 
+function AddUser() {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({ task: '', taskDesc: '' });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
   const addUser = () => {
-    dispatch(actions.addUser(data.name, data.email));
+    dispatch(actions.addUser(formData.name, formData.email));
     document.getElementById('name').value = '';
     document.getElementById('email').value = '';
   };
+  console.log(formData);
   return (
     <div className="add">
       <div className="input-selection">
@@ -22,11 +24,9 @@ const AddUser = (props) => {
             onChange={(e) => handleChange(e)}
             id="name"
             name="name"
-            placeholder="Name...."
+            placeholder="Name..."
           />
         </label>
-      </div>
-      <div className="input-selection">
         <label>
           Email:
           <input
@@ -34,13 +34,13 @@ const AddUser = (props) => {
             onChange={(e) => handleChange(e)}
             id="email"
             name="email"
-            placeholder="Email...."
+            placeholder="Email Address..."
           />
         </label>
       </div>
-      <button onClick={addUser}>Add user</button>
+      <button onClick={addUser}>Add User</button>
     </div>
   );
-};
+}
 
 export default AddUser;

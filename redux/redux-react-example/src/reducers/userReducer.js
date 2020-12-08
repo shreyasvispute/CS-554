@@ -3,11 +3,13 @@ const initalState = [
   {
     id: uuid(),
     name: 'Patrick Hill',
-    email: 'Phill@stevens.edu'
+    email: 'phill@stevens.edu'
   }
 ];
+
 let copyState = null;
 let index = 0;
+
 const userReducer = (state = initalState, action) => {
   const { type, payload } = action;
 
@@ -16,11 +18,7 @@ const userReducer = (state = initalState, action) => {
       console.log('payload', payload);
       return [
         ...state,
-        {
-          id: uuid(),
-          name: payload.name,
-          email: payload.email
-        }
+        { id: uuid(), name: payload.name, email: payload.email }
       ];
     case 'DELETE_USER':
       copyState = [...state];

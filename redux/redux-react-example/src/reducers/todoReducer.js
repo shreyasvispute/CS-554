@@ -2,13 +2,15 @@ import { v4 as uuid } from 'uuid';
 const initalState = [
   {
     id: uuid(),
-    task: 'Pay Cable Bill',
-    taskDesc: 'Pay Cable Bill by the 15th',
+    task: 'Pay the Cable Bill',
+    taskDesc: 'Pay the cable by the 15th',
     completed: false
   }
 ];
+
 let copyState = null;
 let index = 0;
+
 const todoReducer = (state = initalState, action) => {
   const { type, payload } = action;
 
@@ -33,13 +35,11 @@ const todoReducer = (state = initalState, action) => {
       copyState = [...state];
       index = copyState.findIndex((x) => x.id === payload.id);
       copyState[index].completed = true;
-
       return [...copyState];
     case 'UNCOMPLETE_TODO':
       copyState = [...state];
       index = copyState.findIndex((x) => x.id === payload.id);
       copyState[index].completed = false;
-
       return [...copyState];
     default:
       return state;

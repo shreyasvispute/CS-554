@@ -2,8 +2,7 @@ const addTodo = (task, taskDesc) => ({
   type: 'CREATE_TODO',
   payload: {
     task: task,
-    taskDesc: taskDesc,
-    complete: false
+    taskDesc: taskDesc
   }
 });
 
