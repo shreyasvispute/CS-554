@@ -5,6 +5,7 @@
     <div :class="{error: showError}">Test Error Class</div>
     <div :class="{error: showError, 'another-class': showAnotherClass}">Test Error and Another Class</div>
     <div :class="alertObject">Test Alert Object Class</div>
+		<div :class="errorObject">Test Error Object Class</div>
     <div
       :style="{backgroundColor: bgColor, width: bgWidth, height: bgHeight, border:bgBorder }"
     >Test Alert Object Class</div>
@@ -22,14 +23,14 @@ export default {
     return {
       showAlert: true,
       showError: true,
-      showAnotherClass: false,
+      showAnotherClass: true,
       alertObject: {
         alert: true,
         "another-class": true
       },
       errorObject: {
-        error: true,
-        "another-class": true
+        error: false,
+        "another-class": false
       },
       bgColor: "salmon",
       bgWidth: "100%",
