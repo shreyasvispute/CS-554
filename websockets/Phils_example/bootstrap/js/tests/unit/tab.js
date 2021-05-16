@@ -28,18 +28,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapTab();
-    try {
-      $el.bootstrapTab('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapTab();
+      try {
+        $el.bootstrapTab('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -180,68 +181,70 @@ $(function () {
       .bootstrapTab('show');
   });
 
-  QUnit.test('should not fire hidden when hide is prevented', function (
-    assert
-  ) {
-    assert.expect(1);
-    var done = assert.async();
+  QUnit.test(
+    'should not fire hidden when hide is prevented',
+    function (assert) {
+      assert.expect(1);
+      var done = assert.async();
 
-    var tabsHTML =
-      '<ul class="tabs">' +
-      '<li><a href="#home">Home</a></li>' +
-      '<li><a href="#profile">Profile</a></li>' +
-      '</ul>';
+      var tabsHTML =
+        '<ul class="tabs">' +
+        '<li><a href="#home">Home</a></li>' +
+        '<li><a href="#profile">Profile</a></li>' +
+        '</ul>';
 
-    $(tabsHTML)
-      .find('li:first a')
-      .on('hide.bs.tab', function (e) {
-        e.preventDefault();
-        assert.ok(true, 'hide event fired');
-        done();
-      })
-      .on('hidden.bs.tab', function () {
-        assert.ok(false, 'hidden event fired');
-      })
-      .bootstrapTab('show')
-      .end()
-      .find('li:last a')
-      .bootstrapTab('show');
-  });
+      $(tabsHTML)
+        .find('li:first a')
+        .on('hide.bs.tab', function (e) {
+          e.preventDefault();
+          assert.ok(true, 'hide event fired');
+          done();
+        })
+        .on('hidden.bs.tab', function () {
+          assert.ok(false, 'hidden event fired');
+        })
+        .bootstrapTab('show')
+        .end()
+        .find('li:last a')
+        .bootstrapTab('show');
+    }
+  );
 
-  QUnit.test('hide and hidden events contain correct relatedTarget', function (
-    assert
-  ) {
-    assert.expect(2);
-    var done = assert.async();
+  QUnit.test(
+    'hide and hidden events contain correct relatedTarget',
+    function (assert) {
+      assert.expect(2);
+      var done = assert.async();
 
-    var tabsHTML =
-      '<ul class="tabs">' +
-      '<li><a href="#home">Home</a></li>' +
-      '<li><a href="#profile">Profile</a></li>' +
-      '</ul>';
+      var tabsHTML =
+        '<ul class="tabs">' +
+        '<li><a href="#home">Home</a></li>' +
+        '<li><a href="#profile">Profile</a></li>' +
+        '</ul>';
 
-    $(tabsHTML)
-      .find('li:first a')
-      .on('hide.bs.tab', function (e) {
-        assert.strictEqual(
-          e.relatedTarget.hash,
-          '#profile',
-          'references correct element as relatedTarget'
-        );
-      })
-      .on('hidden.bs.tab', function (e) {
-        assert.strictEqual(
-          e.relatedTarget.hash,
-          '#profile',
-          'references correct element as relatedTarget'
-        );
-        done();
-      })
-      .bootstrapTab('show')
-      .end()
-      .find('li:last a')
-      .bootstrapTab('show');
-  });
+      $(tabsHTML)
+        .find('li:first a')
+        .on('hide.bs.tab', function (e) {
+          assert.strictEqual(
+            e.relatedTarget.hash,
+            '#profile',
+            'references correct element as relatedTarget'
+          );
+        })
+        .on('hidden.bs.tab', function (e) {
+          assert.strictEqual(
+            e.relatedTarget.hash,
+            '#profile',
+            'references correct element as relatedTarget'
+          );
+          done();
+        })
+        .bootstrapTab('show')
+        .end()
+        .find('li:last a')
+        .bootstrapTab('show');
+    }
+  );
 
   QUnit.test('selected tab should have aria-expanded', function (assert) {
     assert.expect(8);

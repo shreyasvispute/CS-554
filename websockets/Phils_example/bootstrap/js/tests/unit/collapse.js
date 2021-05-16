@@ -28,18 +28,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapCollapse();
-    try {
-      $el.bootstrapCollapse('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapCollapse();
+      try {
+        $el.bootstrapCollapse('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',

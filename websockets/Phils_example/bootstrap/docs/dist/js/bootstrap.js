@@ -606,12 +606,17 @@ if (typeof jQuery === 'undefined') {
 
         Button._jQueryInterface.call($(button), 'toggle');
       })
-      .on(Event.FOCUS_BLUR_DATA_API, Selector.DATA_TOGGLE_CARROT, function (
-        event
-      ) {
-        var button = $(event.target).closest(Selector.BUTTON)[0];
-        $(button).toggleClass(ClassName.FOCUS, /^focus(in)?$/.test(event.type));
-      });
+      .on(
+        Event.FOCUS_BLUR_DATA_API,
+        Selector.DATA_TOGGLE_CARROT,
+        function (event) {
+          var button = $(event.target).closest(Selector.BUTTON)[0];
+          $(button).toggleClass(
+            ClassName.FOCUS,
+            /^focus(in)?$/.test(event.type)
+          );
+        }
+      );
 
     /**
      * ------------------------------------------------------------------------
@@ -1507,17 +1512,19 @@ if (typeof jQuery === 'undefined') {
      * ------------------------------------------------------------------------
      */
 
-    $(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (
-      event
-    ) {
-      event.preventDefault();
+    $(document).on(
+      Event.CLICK_DATA_API,
+      Selector.DATA_TOGGLE,
+      function (event) {
+        event.preventDefault();
 
-      var target = Collapse._getTargetFromElement(this);
-      var data = $(target).data(DATA_KEY);
-      var config = data ? 'toggle' : $(this).data();
+        var target = Collapse._getTargetFromElement(this);
+        var data = $(target).data(DATA_KEY);
+        var config = data ? 'toggle' : $(this).data();
 
-      Collapse._jQueryInterface.call($(target), config);
-    });
+        Collapse._jQueryInterface.call($(target), config);
+      }
+    );
 
     /**
      * ------------------------------------------------------------------------
@@ -2351,41 +2358,43 @@ if (typeof jQuery === 'undefined') {
      * ------------------------------------------------------------------------
      */
 
-    $(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (
-      event
-    ) {
-      var _this13 = this;
+    $(document).on(
+      Event.CLICK_DATA_API,
+      Selector.DATA_TOGGLE,
+      function (event) {
+        var _this13 = this;
 
-      var target = void 0;
-      var selector = Util.getSelectorFromElement(this);
+        var target = void 0;
+        var selector = Util.getSelectorFromElement(this);
 
-      if (selector) {
-        target = $(selector)[0];
-      }
-
-      var config = $(target).data(DATA_KEY)
-        ? 'toggle'
-        : $.extend({}, $(target).data(), $(this).data());
-
-      if (this.tagName === 'A') {
-        event.preventDefault();
-      }
-
-      var $target = $(target).one(Event.SHOW, function (showEvent) {
-        if (showEvent.isDefaultPrevented()) {
-          // only register focus restorer if modal will actually get shown
-          return;
+        if (selector) {
+          target = $(selector)[0];
         }
 
-        $target.one(Event.HIDDEN, function () {
-          if ($(_this13).is(':visible')) {
-            _this13.focus();
-          }
-        });
-      });
+        var config = $(target).data(DATA_KEY)
+          ? 'toggle'
+          : $.extend({}, $(target).data(), $(this).data());
 
-      Modal._jQueryInterface.call($(target), config, this);
-    });
+        if (this.tagName === 'A') {
+          event.preventDefault();
+        }
+
+        var $target = $(target).one(Event.SHOW, function (showEvent) {
+          if (showEvent.isDefaultPrevented()) {
+            // only register focus restorer if modal will actually get shown
+            return;
+          }
+
+          $target.one(Event.HIDDEN, function () {
+            if ($(_this13).is(':visible')) {
+              _this13.focus();
+            }
+          });
+        });
+
+        Modal._jQueryInterface.call($(target), config, this);
+      }
+    );
 
     /**
      * ------------------------------------------------------------------------
@@ -3013,12 +3022,14 @@ if (typeof jQuery === 'undefined') {
      * ------------------------------------------------------------------------
      */
 
-    $(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (
-      event
-    ) {
-      event.preventDefault();
-      Tab._jQueryInterface.call($(this), 'show');
-    });
+    $(document).on(
+      Event.CLICK_DATA_API,
+      Selector.DATA_TOGGLE,
+      function (event) {
+        event.preventDefault();
+        Tab._jQueryInterface.call($(this), 'show');
+      }
+    );
 
     /**
      * ------------------------------------------------------------------------

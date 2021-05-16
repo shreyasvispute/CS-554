@@ -29,18 +29,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapTab();
-    try {
-      $el.bootstrapTab('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapTab();
+      try {
+        $el.bootstrapTab('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -93,75 +94,89 @@ $(function () {
     assert.strictEqual($('#qunit-fixture').find('.active').attr('id'), 'home');
   });
 
-  QUnit.test('should activate element by tab id in ordered list', function (
-    assert
-  ) {
-    assert.expect(2);
-    var pillsHTML =
-      '<ol class="nav nav-pills">' +
-      '<li><a href="#home">Home</a></li>' +
-      '<li><a href="#profile">Profile</a></li>' +
-      '</ol>';
+  QUnit.test(
+    'should activate element by tab id in ordered list',
+    function (assert) {
+      assert.expect(2);
+      var pillsHTML =
+        '<ol class="nav nav-pills">' +
+        '<li><a href="#home">Home</a></li>' +
+        '<li><a href="#profile">Profile</a></li>' +
+        '</ol>';
 
-    $('<ol><li id="home"/><li id="profile"/></ol>').appendTo('#qunit-fixture');
+      $('<ol><li id="home"/><li id="profile"/></ol>').appendTo(
+        '#qunit-fixture'
+      );
 
-    $(pillsHTML).find('li:last-child a').bootstrapTab('show');
-    assert.strictEqual(
-      $('#qunit-fixture').find('.active').attr('id'),
-      'profile'
-    );
+      $(pillsHTML).find('li:last-child a').bootstrapTab('show');
+      assert.strictEqual(
+        $('#qunit-fixture').find('.active').attr('id'),
+        'profile'
+      );
 
-    $(pillsHTML).find('li:first-child a').bootstrapTab('show');
-    assert.strictEqual($('#qunit-fixture').find('.active').attr('id'), 'home');
-  });
+      $(pillsHTML).find('li:first-child a').bootstrapTab('show');
+      assert.strictEqual(
+        $('#qunit-fixture').find('.active').attr('id'),
+        'home'
+      );
+    }
+  );
 
-  QUnit.test('should activate element by tab id in nav list', function (
-    assert
-  ) {
-    assert.expect(2);
-    var tabsHTML =
-      '<nav class="nav">' +
-      '<a href="#home">Home</a>' +
-      '<a href="#profile">Profile</a>' +
-      '</nav>';
+  QUnit.test(
+    'should activate element by tab id in nav list',
+    function (assert) {
+      assert.expect(2);
+      var tabsHTML =
+        '<nav class="nav">' +
+        '<a href="#home">Home</a>' +
+        '<a href="#profile">Profile</a>' +
+        '</nav>';
 
-    $('<nav><div id="home"></div><div id="profile"></div></nav>').appendTo(
-      '#qunit-fixture'
-    );
+      $('<nav><div id="home"></div><div id="profile"></div></nav>').appendTo(
+        '#qunit-fixture'
+      );
 
-    $(tabsHTML).find('a:last-child').bootstrapTab('show');
-    assert.strictEqual(
-      $('#qunit-fixture').find('.active').attr('id'),
-      'profile'
-    );
+      $(tabsHTML).find('a:last-child').bootstrapTab('show');
+      assert.strictEqual(
+        $('#qunit-fixture').find('.active').attr('id'),
+        'profile'
+      );
 
-    $(tabsHTML).find('a:first-child').bootstrapTab('show');
-    assert.strictEqual($('#qunit-fixture').find('.active').attr('id'), 'home');
-  });
+      $(tabsHTML).find('a:first-child').bootstrapTab('show');
+      assert.strictEqual(
+        $('#qunit-fixture').find('.active').attr('id'),
+        'home'
+      );
+    }
+  );
 
-  QUnit.test('should activate element by tab id in list group', function (
-    assert
-  ) {
-    assert.expect(2);
-    var tabsHTML =
-      '<div class="list-group">' +
-      '<a href="#home">Home</a>' +
-      '<a href="#profile">Profile</a>' +
-      '</div>';
+  QUnit.test(
+    'should activate element by tab id in list group',
+    function (assert) {
+      assert.expect(2);
+      var tabsHTML =
+        '<div class="list-group">' +
+        '<a href="#home">Home</a>' +
+        '<a href="#profile">Profile</a>' +
+        '</div>';
 
-    $('<nav><div id="home"></div><div id="profile"></div></nav>').appendTo(
-      '#qunit-fixture'
-    );
+      $('<nav><div id="home"></div><div id="profile"></div></nav>').appendTo(
+        '#qunit-fixture'
+      );
 
-    $(tabsHTML).find('a:last-child').bootstrapTab('show');
-    assert.strictEqual(
-      $('#qunit-fixture').find('.active').attr('id'),
-      'profile'
-    );
+      $(tabsHTML).find('a:last-child').bootstrapTab('show');
+      assert.strictEqual(
+        $('#qunit-fixture').find('.active').attr('id'),
+        'profile'
+      );
 
-    $(tabsHTML).find('a:first-child').bootstrapTab('show');
-    assert.strictEqual($('#qunit-fixture').find('.active').attr('id'), 'home');
-  });
+      $(tabsHTML).find('a:first-child').bootstrapTab('show');
+      assert.strictEqual(
+        $('#qunit-fixture').find('.active').attr('id'),
+        'home'
+      );
+    }
+  );
 
   QUnit.test('should not fire shown when show is prevented', function (assert) {
     assert.expect(1);
@@ -179,27 +194,28 @@ $(function () {
       .bootstrapTab('show');
   });
 
-  QUnit.test('should not fire shown when tab is already active', function (
-    assert
-  ) {
-    assert.expect(0);
-    var tabsHTML =
-      '<ul class="nav nav-tabs" role="tablist">' +
-      '<li class="nav-item"><a href="#home" class="nav-link active" role="tab">Home</a></li>' +
-      '<li class="nav-item"><a href="#profile" class="nav-link" role="tab">Profile</a></li>' +
-      '</ul>' +
-      '<div class="tab-content">' +
-      '<div class="tab-pane active" id="home" role="tabpanel"></div>' +
-      '<div class="tab-pane" id="profile" role="tabpanel"></div>' +
-      '</div>';
+  QUnit.test(
+    'should not fire shown when tab is already active',
+    function (assert) {
+      assert.expect(0);
+      var tabsHTML =
+        '<ul class="nav nav-tabs" role="tablist">' +
+        '<li class="nav-item"><a href="#home" class="nav-link active" role="tab">Home</a></li>' +
+        '<li class="nav-item"><a href="#profile" class="nav-link" role="tab">Profile</a></li>' +
+        '</ul>' +
+        '<div class="tab-content">' +
+        '<div class="tab-pane active" id="home" role="tabpanel"></div>' +
+        '<div class="tab-pane" id="profile" role="tabpanel"></div>' +
+        '</div>';
 
-    $(tabsHTML)
-      .find('a.active')
-      .on('shown.bs.tab', function () {
-        assert.ok(true, 'shown event fired');
-      })
-      .bootstrapTab('show');
-  });
+      $(tabsHTML)
+        .find('a.active')
+        .on('shown.bs.tab', function () {
+          assert.ok(true, 'shown event fired');
+        })
+        .bootstrapTab('show');
+    }
+  );
 
   QUnit.test('should not fire shown when tab is disabled', function (assert) {
     assert.expect(0);
@@ -293,68 +309,70 @@ $(function () {
       .bootstrapTab('show');
   });
 
-  QUnit.test('should not fire hidden when hide is prevented', function (
-    assert
-  ) {
-    assert.expect(1);
-    var done = assert.async();
+  QUnit.test(
+    'should not fire hidden when hide is prevented',
+    function (assert) {
+      assert.expect(1);
+      var done = assert.async();
 
-    var tabsHTML =
-      '<ul class="nav">' +
-      '<li><a href="#home">Home</a></li>' +
-      '<li><a href="#profile">Profile</a></li>' +
-      '</ul>';
+      var tabsHTML =
+        '<ul class="nav">' +
+        '<li><a href="#home">Home</a></li>' +
+        '<li><a href="#profile">Profile</a></li>' +
+        '</ul>';
 
-    $(tabsHTML)
-      .find('li:first-child a')
-      .on('hide.bs.tab', function (e) {
-        e.preventDefault();
-        assert.ok(true, 'hide event fired');
-        done();
-      })
-      .on('hidden.bs.tab', function () {
-        assert.ok(false, 'hidden event fired');
-      })
-      .bootstrapTab('show')
-      .end()
-      .find('li:last-child a')
-      .bootstrapTab('show');
-  });
+      $(tabsHTML)
+        .find('li:first-child a')
+        .on('hide.bs.tab', function (e) {
+          e.preventDefault();
+          assert.ok(true, 'hide event fired');
+          done();
+        })
+        .on('hidden.bs.tab', function () {
+          assert.ok(false, 'hidden event fired');
+        })
+        .bootstrapTab('show')
+        .end()
+        .find('li:last-child a')
+        .bootstrapTab('show');
+    }
+  );
 
-  QUnit.test('hide and hidden events contain correct relatedTarget', function (
-    assert
-  ) {
-    assert.expect(2);
-    var done = assert.async();
+  QUnit.test(
+    'hide and hidden events contain correct relatedTarget',
+    function (assert) {
+      assert.expect(2);
+      var done = assert.async();
 
-    var tabsHTML =
-      '<ul class="nav">' +
-      '<li><a href="#home">Home</a></li>' +
-      '<li><a href="#profile">Profile</a></li>' +
-      '</ul>';
+      var tabsHTML =
+        '<ul class="nav">' +
+        '<li><a href="#home">Home</a></li>' +
+        '<li><a href="#profile">Profile</a></li>' +
+        '</ul>';
 
-    $(tabsHTML)
-      .find('li:first-child a')
-      .on('hide.bs.tab', function (e) {
-        assert.strictEqual(
-          e.relatedTarget.hash,
-          '#profile',
-          'references correct element as relatedTarget'
-        );
-      })
-      .on('hidden.bs.tab', function (e) {
-        assert.strictEqual(
-          e.relatedTarget.hash,
-          '#profile',
-          'references correct element as relatedTarget'
-        );
-        done();
-      })
-      .bootstrapTab('show')
-      .end()
-      .find('li:last-child a')
-      .bootstrapTab('show');
-  });
+      $(tabsHTML)
+        .find('li:first-child a')
+        .on('hide.bs.tab', function (e) {
+          assert.strictEqual(
+            e.relatedTarget.hash,
+            '#profile',
+            'references correct element as relatedTarget'
+          );
+        })
+        .on('hidden.bs.tab', function (e) {
+          assert.strictEqual(
+            e.relatedTarget.hash,
+            '#profile',
+            'references correct element as relatedTarget'
+          );
+          done();
+        })
+        .bootstrapTab('show')
+        .end()
+        .find('li:last-child a')
+        .bootstrapTab('show');
+    }
+  );
 
   QUnit.test('selected tab should have aria-selected', function (assert) {
     assert.expect(8);
@@ -414,21 +432,22 @@ $(function () {
     );
   });
 
-  QUnit.test('selected tab should deactivate previous selected tab', function (
-    assert
-  ) {
-    assert.expect(2);
-    var tabsHTML =
-      '<ul class="nav nav-tabs">' +
-      '<li class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab">Home</a></li>' +
-      '<li class="nav-item"><a class="nav-link" href="#profile" data-toggle="tab">Profile</a></li>' +
-      '</ul>';
-    var $tabs = $(tabsHTML).appendTo('#qunit-fixture');
+  QUnit.test(
+    'selected tab should deactivate previous selected tab',
+    function (assert) {
+      assert.expect(2);
+      var tabsHTML =
+        '<ul class="nav nav-tabs">' +
+        '<li class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab">Home</a></li>' +
+        '<li class="nav-item"><a class="nav-link" href="#profile" data-toggle="tab">Profile</a></li>' +
+        '</ul>';
+      var $tabs = $(tabsHTML).appendTo('#qunit-fixture');
 
-    $tabs.find('li:last-child a').trigger('click');
-    assert.notOk($tabs.find('li:first-child a').hasClass('active'));
-    assert.ok($tabs.find('li:last-child a').hasClass('active'));
-  });
+      $tabs.find('li:last-child a').trigger('click');
+      assert.notOk($tabs.find('li:first-child a').hasClass('active'));
+      assert.ok($tabs.find('li:last-child a').hasClass('active'));
+    }
+  );
 
   QUnit.test(
     'selected tab should deactivate previous selected link in dropdown',

@@ -47,17 +47,18 @@ $(function () {
     assert.ok($btn.hasClass('active'), 'btn has class active');
   });
 
-  QUnit.test('should toggle active when btn children are clicked', function (
-    assert
-  ) {
-    assert.expect(2);
-    var $btn = $('<button class="btn" data-toggle="button">mdo</button>');
-    var $inner = $('<i/>');
-    $btn.append($inner).appendTo('#qunit-fixture');
-    assert.ok(!$btn.hasClass('active'), 'btn does not have active class');
-    $inner.trigger('click');
-    assert.ok($btn.hasClass('active'), 'btn has class active');
-  });
+  QUnit.test(
+    'should toggle active when btn children are clicked',
+    function (assert) {
+      assert.expect(2);
+      var $btn = $('<button class="btn" data-toggle="button">mdo</button>');
+      var $inner = $('<i/>');
+      $btn.append($inner).appendTo('#qunit-fixture');
+      assert.ok(!$btn.hasClass('active'), 'btn does not have active class');
+      $inner.trigger('click');
+      assert.ok($btn.hasClass('active'), 'btn has class active');
+    }
+  );
 
   QUnit.test('should toggle aria-pressed', function (assert) {
     assert.expect(2);

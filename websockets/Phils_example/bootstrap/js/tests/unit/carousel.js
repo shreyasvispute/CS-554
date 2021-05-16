@@ -28,18 +28,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapCarousel();
-    try {
-      $el.bootstrapCarousel('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapCarousel();
+      try {
+        $el.bootstrapCarousel('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -462,42 +463,43 @@ $(function () {
     $carousel.remove();
   });
 
-  QUnit.test('should skip over non-items when using item indices', function (
-    assert
-  ) {
-    assert.expect(2);
-    var templateHTML =
-      '<div id="myCarousel" class="carousel" data-interval="1814">' +
-      '<div class="carousel-inner">' +
-      '<div class="carousel-item active">' +
-      '<img alt="">' +
-      '</div>' +
-      '<script type="text/x-metamorph" id="thingy"/>' +
-      '<div class="carousel-item">' +
-      '<img alt="">' +
-      '</div>' +
-      '<div class="carousel-item">' +
-      '</div>' +
-      '</div>' +
-      '</div>';
-    var $template = $(templateHTML);
+  QUnit.test(
+    'should skip over non-items when using item indices',
+    function (assert) {
+      assert.expect(2);
+      var templateHTML =
+        '<div id="myCarousel" class="carousel" data-interval="1814">' +
+        '<div class="carousel-inner">' +
+        '<div class="carousel-item active">' +
+        '<img alt="">' +
+        '</div>' +
+        '<script type="text/x-metamorph" id="thingy"/>' +
+        '<div class="carousel-item">' +
+        '<img alt="">' +
+        '</div>' +
+        '<div class="carousel-item">' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      var $template = $(templateHTML);
 
-    $template.bootstrapCarousel();
+      $template.bootstrapCarousel();
 
-    assert.strictEqual(
-      $template.find('.carousel-item')[0],
-      $template.find('.active')[0],
-      'first item active'
-    );
+      assert.strictEqual(
+        $template.find('.carousel-item')[0],
+        $template.find('.active')[0],
+        'first item active'
+      );
 
-    $template.bootstrapCarousel(1);
+      $template.bootstrapCarousel(1);
 
-    assert.strictEqual(
-      $template.find('.carousel-item')[1],
-      $template.find('.active')[0],
-      'second item active'
-    );
-  });
+      assert.strictEqual(
+        $template.find('.carousel-item')[1],
+        $template.find('.active')[0],
+        'second item active'
+      );
+    }
+  );
 
   QUnit.test(
     'should skip over non-items when using next/prev methods',
@@ -575,87 +577,89 @@ $(function () {
     }
   );
 
-  QUnit.test('should go to next item if right arrow key is pressed', function (
-    assert
-  ) {
-    assert.expect(2);
-    var templateHTML =
-      '<div id="myCarousel" class="carousel" data-interval="false">' +
-      '<div class="carousel-inner">' +
-      '<div id="first" class="carousel-item active">' +
-      '<img alt="">' +
-      '</div>' +
-      '<div id="second" class="carousel-item">' +
-      '<img alt="">' +
-      '</div>' +
-      '<div id="third" class="carousel-item">' +
-      '<img alt="">' +
-      '</div>' +
-      '</div>' +
-      '</div>';
-    var $template = $(templateHTML);
+  QUnit.test(
+    'should go to next item if right arrow key is pressed',
+    function (assert) {
+      assert.expect(2);
+      var templateHTML =
+        '<div id="myCarousel" class="carousel" data-interval="false">' +
+        '<div class="carousel-inner">' +
+        '<div id="first" class="carousel-item active">' +
+        '<img alt="">' +
+        '</div>' +
+        '<div id="second" class="carousel-item">' +
+        '<img alt="">' +
+        '</div>' +
+        '<div id="third" class="carousel-item">' +
+        '<img alt="">' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      var $template = $(templateHTML);
 
-    $template.bootstrapCarousel();
+      $template.bootstrapCarousel();
 
-    assert.strictEqual(
-      $template.find('.carousel-item')[0],
-      $template.find('.active')[0],
-      'first item active'
-    );
+      assert.strictEqual(
+        $template.find('.carousel-item')[0],
+        $template.find('.active')[0],
+        'first item active'
+      );
 
-    $template.trigger($.Event('keydown', { which: 39 }));
+      $template.trigger($.Event('keydown', { which: 39 }));
 
-    assert.strictEqual(
-      $template.find('.carousel-item')[1],
-      $template.find('.active')[0],
-      'second item active'
-    );
-  });
+      assert.strictEqual(
+        $template.find('.carousel-item')[1],
+        $template.find('.active')[0],
+        'second item active'
+      );
+    }
+  );
 
-  QUnit.test('should support disabling the keyboard navigation', function (
-    assert
-  ) {
-    assert.expect(3);
-    var templateHTML =
-      '<div id="myCarousel" class="carousel" data-interval="false" data-keyboard="false">' +
-      '<div class="carousel-inner">' +
-      '<div id="first" class="carousel-item active">' +
-      '<img alt="">' +
-      '</div>' +
-      '<div id="second" class="carousel-item">' +
-      '<img alt="">' +
-      '</div>' +
-      '<div id="third" class="carousel-item">' +
-      '<img alt="">' +
-      '</div>' +
-      '</div>' +
-      '</div>';
-    var $template = $(templateHTML);
+  QUnit.test(
+    'should support disabling the keyboard navigation',
+    function (assert) {
+      assert.expect(3);
+      var templateHTML =
+        '<div id="myCarousel" class="carousel" data-interval="false" data-keyboard="false">' +
+        '<div class="carousel-inner">' +
+        '<div id="first" class="carousel-item active">' +
+        '<img alt="">' +
+        '</div>' +
+        '<div id="second" class="carousel-item">' +
+        '<img alt="">' +
+        '</div>' +
+        '<div id="third" class="carousel-item">' +
+        '<img alt="">' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      var $template = $(templateHTML);
 
-    $template.bootstrapCarousel();
+      $template.bootstrapCarousel();
 
-    assert.strictEqual(
-      $template.find('.carousel-item')[0],
-      $template.find('.active')[0],
-      'first item active'
-    );
+      assert.strictEqual(
+        $template.find('.carousel-item')[0],
+        $template.find('.active')[0],
+        'first item active'
+      );
 
-    $template.trigger($.Event('keydown', { which: 39 }));
+      $template.trigger($.Event('keydown', { which: 39 }));
 
-    assert.strictEqual(
-      $template.find('.carousel-item')[0],
-      $template.find('.active')[0],
-      'first item still active after right arrow press'
-    );
+      assert.strictEqual(
+        $template.find('.carousel-item')[0],
+        $template.find('.active')[0],
+        'first item still active after right arrow press'
+      );
 
-    $template.trigger($.Event('keydown', { which: 37 }));
+      $template.trigger($.Event('keydown', { which: 37 }));
 
-    assert.strictEqual(
-      $template.find('.carousel-item')[0],
-      $template.find('.active')[0],
-      'first item still active after left arrow press'
-    );
-  });
+      assert.strictEqual(
+        $template.find('.carousel-item')[0],
+        $template.find('.active')[0],
+        'first item still active after left arrow press'
+      );
+    }
+  );
 
   QUnit.test(
     'should ignore keyboard events within <input>s and <textarea>s',

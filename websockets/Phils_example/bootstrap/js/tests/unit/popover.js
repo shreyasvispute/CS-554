@@ -29,18 +29,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapPopover();
-    try {
-      $el.bootstrapPopover('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapPopover();
+      try {
+        $el.bootstrapPopover('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -66,16 +67,17 @@ $(function () {
     assert.strictEqual($('.popover').length, 0, 'popover removed');
   });
 
-  QUnit.test('should store popover instance in popover data object', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $popover = $(
-      '<a href="#" title="mdo" data-content="https://twitter.com/mdo">@mdo</a>'
-    ).bootstrapPopover();
+  QUnit.test(
+    'should store popover instance in popover data object',
+    function (assert) {
+      assert.expect(1);
+      var $popover = $(
+        '<a href="#" title="mdo" data-content="https://twitter.com/mdo">@mdo</a>'
+      ).bootstrapPopover();
 
-    assert.ok($popover.data('bs.popover'), 'popover instance exists');
-  });
+      assert.ok($popover.data('bs.popover'), 'popover instance exists');
+    }
+  );
 
   QUnit.test(
     'should store popover trigger in popover instance data object',

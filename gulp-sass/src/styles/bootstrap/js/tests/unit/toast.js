@@ -38,19 +38,20 @@ $(function () {
     assert.strictEqual(typeof Toast.VERSION, 'string');
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapToast();
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapToast();
 
-    try {
-      $el.bootstrapToast('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+      try {
+        $el.bootstrapToast('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -157,37 +158,38 @@ $(function () {
     assert.ok(typeof $toast.data('bs.toast') === 'undefined');
   });
 
-  QUnit.test('should allow to destroy toast and hide it before that', function (
-    assert
-  ) {
-    assert.expect(4);
-    var done = assert.async();
+  QUnit.test(
+    'should allow to destroy toast and hide it before that',
+    function (assert) {
+      assert.expect(4);
+      var done = assert.async();
 
-    var toastHtml =
-      '<div class="toast" data-delay="0" data-autohide="false">' +
-      '<div class="toast-body">' +
-      'a simple toast' +
-      '</div>' +
-      '</div>';
+      var toastHtml =
+        '<div class="toast" data-delay="0" data-autohide="false">' +
+        '<div class="toast-body">' +
+        'a simple toast' +
+        '</div>' +
+        '</div>';
 
-    var $toast = $(toastHtml).bootstrapToast().appendTo($('#qunit-fixture'));
+      var $toast = $(toastHtml).bootstrapToast().appendTo($('#qunit-fixture'));
 
-    $toast
-      .one('shown.bs.toast', function () {
-        setTimeout(function () {
-          assert.ok($toast.hasClass('show'));
-          assert.ok(typeof $toast.data('bs.toast') !== 'undefined');
+      $toast
+        .one('shown.bs.toast', function () {
+          setTimeout(function () {
+            assert.ok($toast.hasClass('show'));
+            assert.ok(typeof $toast.data('bs.toast') !== 'undefined');
 
-          $toast.bootstrapToast('dispose');
+            $toast.bootstrapToast('dispose');
 
-          assert.ok(typeof $toast.data('bs.toast') === 'undefined');
-          assert.ok($toast.hasClass('show') === false);
+            assert.ok(typeof $toast.data('bs.toast') === 'undefined');
+            assert.ok($toast.hasClass('show') === false);
 
-          done();
-        }, 1);
-      })
-      .bootstrapToast('show');
-  });
+            done();
+          }, 1);
+        })
+        .bootstrapToast('show');
+    }
+  );
 
   QUnit.test('should allow to config in js', function (assert) {
     assert.expect(1);

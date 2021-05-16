@@ -82,20 +82,21 @@ $(function () {
     );
   });
 
-  QUnit.test('should not fire closed when close is prevented', function (
-    assert
-  ) {
-    assert.expect(1);
-    var done = assert.async();
-    $('<div class="alert"/>')
-      .on('close.bs.alert', function (e) {
-        e.preventDefault();
-        assert.ok(true, 'close event fired');
-        done();
-      })
-      .on('closed.bs.alert', function () {
-        assert.ok(false, 'closed event fired');
-      })
-      .bootstrapAlert('close');
-  });
+  QUnit.test(
+    'should not fire closed when close is prevented',
+    function (assert) {
+      assert.expect(1);
+      var done = assert.async();
+      $('<div class="alert"/>')
+        .on('close.bs.alert', function (e) {
+          e.preventDefault();
+          assert.ok(true, 'close event fired');
+          done();
+        })
+        .on('closed.bs.alert', function () {
+          assert.ok(false, 'closed event fired');
+        })
+        .bootstrapAlert('close');
+    }
+  );
 });

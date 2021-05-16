@@ -166,32 +166,34 @@ $(function () {
     assert.ok(id !== id2, id + ' !== ' + id2);
   });
 
-  QUnit.test('Util.supportsTransitionEnd should return true', function (
-    assert
-  ) {
-    assert.expect(1);
-    assert.ok(Util.supportsTransitionEnd());
-  });
-
-  QUnit.test('Util.findShadowRoot should find the shadow DOM root', function (
-    assert
-  ) {
-    // Only for newer browsers
-    if (!document.documentElement.attachShadow) {
-      assert.expect(0);
-      return;
+  QUnit.test(
+    'Util.supportsTransitionEnd should return true',
+    function (assert) {
+      assert.expect(1);
+      assert.ok(Util.supportsTransitionEnd());
     }
+  );
 
-    assert.expect(2);
-    var $div = $('<div id="test"></div>').appendTo($('#qunit-fixture'));
-    var shadowRoot = $div[0].attachShadow({
-      mode: 'open'
-    });
+  QUnit.test(
+    'Util.findShadowRoot should find the shadow DOM root',
+    function (assert) {
+      // Only for newer browsers
+      if (!document.documentElement.attachShadow) {
+        assert.expect(0);
+        return;
+      }
 
-    assert.equal(shadowRoot, Util.findShadowRoot(shadowRoot));
-    shadowRoot.innerHTML = '<button>Shadow Button</button>';
-    assert.equal(shadowRoot, Util.findShadowRoot(shadowRoot.firstChild));
-  });
+      assert.expect(2);
+      var $div = $('<div id="test"></div>').appendTo($('#qunit-fixture'));
+      var shadowRoot = $div[0].attachShadow({
+        mode: 'open'
+      });
+
+      assert.equal(shadowRoot, Util.findShadowRoot(shadowRoot));
+      shadowRoot.innerHTML = '<button>Shadow Button</button>';
+      assert.equal(shadowRoot, Util.findShadowRoot(shadowRoot.firstChild));
+    }
+  );
 
   QUnit.test(
     'Util.findShadowRoot should return null when attachShadow is not available',

@@ -28,18 +28,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapDropdown();
-    try {
-      $el.bootstrapDropdown('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapDropdown();
+      try {
+        $el.bootstrapDropdown('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -226,38 +227,39 @@ $(function () {
     }
   );
 
-  QUnit.test('should remove "open" class if body is clicked', function (
-    assert
-  ) {
-    assert.expect(2);
-    var dropdownHTML =
-      '<ul class="tabs">' +
-      '<li class="dropdown">' +
-      '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
-      '<ul class="dropdown-menu">' +
-      '<li><a href="#">Secondary link</a></li>' +
-      '<li><a href="#">Something else here</a></li>' +
-      '<li class="divider"/>' +
-      '<li><a href="#">Another link</a></li>' +
-      '</ul>' +
-      '</li>' +
-      '</ul>';
-    var $dropdown = $(dropdownHTML)
-      .appendTo('#qunit-fixture')
-      .find('[data-toggle="dropdown"]')
-      .bootstrapDropdown()
-      .trigger('click');
+  QUnit.test(
+    'should remove "open" class if body is clicked',
+    function (assert) {
+      assert.expect(2);
+      var dropdownHTML =
+        '<ul class="tabs">' +
+        '<li class="dropdown">' +
+        '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown</a>' +
+        '<ul class="dropdown-menu">' +
+        '<li><a href="#">Secondary link</a></li>' +
+        '<li><a href="#">Something else here</a></li>' +
+        '<li class="divider"/>' +
+        '<li><a href="#">Another link</a></li>' +
+        '</ul>' +
+        '</li>' +
+        '</ul>';
+      var $dropdown = $(dropdownHTML)
+        .appendTo('#qunit-fixture')
+        .find('[data-toggle="dropdown"]')
+        .bootstrapDropdown()
+        .trigger('click');
 
-    assert.ok(
-      $dropdown.parent('.dropdown').hasClass('open'),
-      '"open" class added on click'
-    );
-    $(document.body).trigger('click');
-    assert.ok(
-      !$dropdown.parent('.dropdown').hasClass('open'),
-      '"open" class removed'
-    );
-  });
+      assert.ok(
+        $dropdown.parent('.dropdown').hasClass('open'),
+        '"open" class added on click'
+      );
+      $(document.body).trigger('click');
+      assert.ok(
+        !$dropdown.parent('.dropdown').hasClass('open'),
+        '"open" class removed'
+      );
+    }
+  );
 
   QUnit.test(
     'should remove "open" class if body is clicked, with multiple dropdowns',

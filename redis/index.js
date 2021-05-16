@@ -62,8 +62,8 @@ const main = async () => {
       name: 'Stevens'
     },
     'hobbiesAsObject[]': {
-      '0': 'making coffee',
-      '1': 'making low carb recipes',
+      0: 'making coffee',
+      1: 'making low carb recipes',
       sport: 'Baseball'
     },
     age: 44

@@ -30,18 +30,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div/>');
-    $el.bootstrapPopover();
-    try {
-      $el.bootstrapPopover('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div/>');
+      $el.bootstrapPopover();
+      try {
+        $el.bootstrapPopover('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -70,16 +71,17 @@ $(function () {
       .bootstrapPopover('show');
   });
 
-  QUnit.test('should store popover instance in popover data object', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $popover = $(
-      '<a href="#" title="mdo" data-content="https://twitter.com/mdo">@mdo</a>'
-    ).bootstrapPopover();
+  QUnit.test(
+    'should store popover instance in popover data object',
+    function (assert) {
+      assert.expect(1);
+      var $popover = $(
+        '<a href="#" title="mdo" data-content="https://twitter.com/mdo">@mdo</a>'
+      ).bootstrapPopover();
 
-    assert.ok($popover.data('bs.popover'), 'popover instance exists');
-  });
+      assert.ok($popover.data('bs.popover'), 'popover instance exists');
+    }
+  );
 
   QUnit.test(
     'should store popover trigger in popover instance data object',
@@ -600,28 +602,29 @@ $(function () {
     }
   );
 
-  QUnit.test('popover should call content function only once', function (
-    assert
-  ) {
-    assert.expect(1);
-    var done = assert.async();
-    var nbCall = 0;
-    $('<div id="popover" style="display:none">content</div>').appendTo(
-      '#qunit-fixture'
-    );
-    var $popover = $('<a href="#">@Johann-S</a>')
-      .appendTo('#qunit-fixture')
-      .bootstrapPopover({
-        content: function () {
-          nbCall++;
-          return $('#popover').clone().show().get(0);
-        }
-      })
-      .on('shown.bs.popover', function () {
-        assert.strictEqual(nbCall, 1);
-        done();
-      });
+  QUnit.test(
+    'popover should call content function only once',
+    function (assert) {
+      assert.expect(1);
+      var done = assert.async();
+      var nbCall = 0;
+      $('<div id="popover" style="display:none">content</div>').appendTo(
+        '#qunit-fixture'
+      );
+      var $popover = $('<a href="#">@Johann-S</a>')
+        .appendTo('#qunit-fixture')
+        .bootstrapPopover({
+          content: function () {
+            nbCall++;
+            return $('#popover').clone().show().get(0);
+          }
+        })
+        .on('shown.bs.popover', function () {
+          assert.strictEqual(nbCall, 1);
+          done();
+        });
 
-    $popover.trigger($.Event('click'));
-  });
+      $popover.trigger($.Event('click'));
+    }
+  );
 });

@@ -184,12 +184,14 @@
 
       Button._jQueryInterface.call($(button), 'toggle');
     })
-    .on(Event.FOCUS_BLUR_DATA_API, Selector.DATA_TOGGLE_CARROT, function (
-      event
-    ) {
-      var button = $(event.target).closest(Selector.BUTTON)[0];
-      $(button).toggleClass(ClassName.FOCUS, /^focus(in)?$/.test(event.type));
-    });
+    .on(
+      Event.FOCUS_BLUR_DATA_API,
+      Selector.DATA_TOGGLE_CARROT,
+      function (event) {
+        var button = $(event.target).closest(Selector.BUTTON)[0];
+        $(button).toggleClass(ClassName.FOCUS, /^focus(in)?$/.test(event.type));
+      }
+    );
   /**
    * ------------------------------------------------------------------------
    * jQuery

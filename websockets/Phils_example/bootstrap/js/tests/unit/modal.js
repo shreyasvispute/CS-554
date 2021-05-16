@@ -28,18 +28,19 @@ $(function () {
     );
   });
 
-  QUnit.test('should throw explicit error on undefined method', function (
-    assert
-  ) {
-    assert.expect(1);
-    var $el = $('<div id="modal-test"/>');
-    $el.bootstrapModal();
-    try {
-      $el.bootstrapModal('noMethod');
-    } catch (err) {
-      assert.strictEqual(err.message, 'No method named "noMethod"');
+  QUnit.test(
+    'should throw explicit error on undefined method',
+    function (assert) {
+      assert.expect(1);
+      var $el = $('<div id="modal-test"/>');
+      $el.bootstrapModal();
+      try {
+        $el.bootstrapModal('noMethod');
+      } catch (err) {
+        assert.strictEqual(err.message, 'No method named "noMethod"');
+      }
     }
-  });
+  );
 
   QUnit.test(
     'should return jquery collection containing the element',
@@ -60,19 +61,24 @@ $(function () {
     );
   });
 
-  QUnit.test('should insert into dom when show method is called', function (
-    assert
-  ) {
-    assert.expect(1);
-    var done = assert.async();
+  QUnit.test(
+    'should insert into dom when show method is called',
+    function (assert) {
+      assert.expect(1);
+      var done = assert.async();
 
-    $('<div id="modal-test"/>')
-      .on('shown.bs.modal', function () {
-        assert.notEqual($('#modal-test').length, 0, 'modal inserted into dom');
-        done();
-      })
-      .bootstrapModal('show');
-  });
+      $('<div id="modal-test"/>')
+        .on('shown.bs.modal', function () {
+          assert.notEqual(
+            $('#modal-test').length,
+            0,
+            'modal inserted into dom'
+          );
+          done();
+        })
+        .bootstrapModal('show');
+    }
+  );
 
   QUnit.test('should fire show event', function (assert) {
     assert.expect(1);
@@ -86,23 +92,24 @@ $(function () {
       .bootstrapModal('show');
   });
 
-  QUnit.test('should not fire shown when show was prevented', function (
-    assert
-  ) {
-    assert.expect(1);
-    var done = assert.async();
+  QUnit.test(
+    'should not fire shown when show was prevented',
+    function (assert) {
+      assert.expect(1);
+      var done = assert.async();
 
-    $('<div id="modal-test"/>')
-      .on('show.bs.modal', function (e) {
-        e.preventDefault();
-        assert.ok(true, 'show event fired');
-        done();
-      })
-      .on('shown.bs.modal', function () {
-        assert.ok(false, 'shown event fired');
-      })
-      .bootstrapModal('show');
-  });
+      $('<div id="modal-test"/>')
+        .on('show.bs.modal', function (e) {
+          e.preventDefault();
+          assert.ok(true, 'show event fired');
+          done();
+        })
+        .on('shown.bs.modal', function () {
+          assert.ok(false, 'shown event fired');
+        })
+        .bootstrapModal('show');
+    }
+  );
 
   QUnit.test('should hide modal when hide is called', function (assert) {
     assert.expect(3);
@@ -162,23 +169,24 @@ $(function () {
     }
   );
 
-  QUnit.test('should allow modal close with "backdrop:false"', function (
-    assert
-  ) {
-    assert.expect(2);
-    var done = assert.async();
+  QUnit.test(
+    'should allow modal close with "backdrop:false"',
+    function (assert) {
+      assert.expect(2);
+      var done = assert.async();
 
-    $('<div id="modal-test" data-backdrop="false"/>')
-      .on('shown.bs.modal', function () {
-        assert.ok($('#modal-test').is(':visible'), 'modal visible');
-        $(this).bootstrapModal('hide');
-      })
-      .on('hidden.bs.modal', function () {
-        assert.ok(!$('#modal-test').is(':visible'), 'modal hidden');
-        done();
-      })
-      .bootstrapModal('show');
-  });
+      $('<div id="modal-test" data-backdrop="false"/>')
+        .on('shown.bs.modal', function () {
+          assert.ok($('#modal-test').is(':visible'), 'modal visible');
+          $(this).bootstrapModal('hide');
+        })
+        .on('hidden.bs.modal', function () {
+          assert.ok(!$('#modal-test').is(':visible'), 'modal hidden');
+          done();
+        })
+        .bootstrapModal('show');
+    }
+  );
 
   QUnit.test(
     'should close modal when clicking outside of modal-content',
@@ -404,37 +412,38 @@ $(function () {
     }
   );
 
-  QUnit.test('should restore inline body padding after closing', function (
-    assert
-  ) {
-    assert.expect(2);
-    var done = assert.async();
-    var originalBodyPad = 0;
-    var $body = $(document.body);
+  QUnit.test(
+    'should restore inline body padding after closing',
+    function (assert) {
+      assert.expect(2);
+      var done = assert.async();
+      var originalBodyPad = 0;
+      var $body = $(document.body);
 
-    $body.css('padding-right', originalBodyPad);
+      $body.css('padding-right', originalBodyPad);
 
-    $('<div id="modal-test"/>')
-      .on('hidden.bs.modal', function () {
-        var currentBodyPad = parseInt($body.css('padding-right'), 10);
-        assert.notStrictEqual(
-          $body.attr('style'),
-          '',
-          'body has non-empty style attribute'
-        );
-        assert.strictEqual(
-          currentBodyPad,
-          originalBodyPad,
-          'original body padding was not changed'
-        );
-        $body.removeAttr('style');
-        done();
-      })
-      .on('shown.bs.modal', function () {
-        $(this).bootstrapModal('hide');
-      })
-      .bootstrapModal('show');
-  });
+      $('<div id="modal-test"/>')
+        .on('hidden.bs.modal', function () {
+          var currentBodyPad = parseInt($body.css('padding-right'), 10);
+          assert.notStrictEqual(
+            $body.attr('style'),
+            '',
+            'body has non-empty style attribute'
+          );
+          assert.strictEqual(
+            currentBodyPad,
+            originalBodyPad,
+            'original body padding was not changed'
+          );
+          $body.removeAttr('style');
+          done();
+        })
+        .on('shown.bs.modal', function () {
+          $(this).bootstrapModal('hide');
+        })
+        .bootstrapModal('show');
+    }
+  );
 
   QUnit.test(
     'should ignore values set via CSS when trying to restore body padding after closing',

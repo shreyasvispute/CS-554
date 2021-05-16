@@ -48,17 +48,18 @@ $(function () {
     assert.ok($btn.hasClass('active'), 'btn has class active');
   });
 
-  QUnit.test('should toggle active when btn children are clicked', function (
-    assert
-  ) {
-    assert.expect(2);
-    var $btn = $('<button class="btn" data-toggle="button">mdo</button>');
-    var $inner = $('<i/>');
-    $btn.append($inner).appendTo('#qunit-fixture');
-    assert.ok(!$btn.hasClass('active'), 'btn does not have active class');
-    $inner.trigger('click');
-    assert.ok($btn.hasClass('active'), 'btn has class active');
-  });
+  QUnit.test(
+    'should toggle active when btn children are clicked',
+    function (assert) {
+      assert.expect(2);
+      var $btn = $('<button class="btn" data-toggle="button">mdo</button>');
+      var $inner = $('<i/>');
+      $btn.append($inner).appendTo('#qunit-fixture');
+      assert.ok(!$btn.hasClass('active'), 'btn does not have active class');
+      $inner.trigger('click');
+      assert.ok($btn.hasClass('active'), 'btn has class active');
+    }
+  );
 
   QUnit.test('should toggle aria-pressed', function (assert) {
     assert.expect(2);
@@ -78,19 +79,20 @@ $(function () {
     );
   });
 
-  QUnit.test('should toggle aria-pressed on buttons with container', function (
-    assert
-  ) {
-    assert.expect(1);
-    var groupHTML =
-      '<div class="btn-group" data-toggle="buttons">' +
-      '<button id="btn1" class="btn btn-secondary" type="button">One</button>' +
-      '<button class="btn btn-secondary" type="button">Two</button>' +
-      '</div>';
-    $('#qunit-fixture').append(groupHTML);
-    $('#btn1').bootstrapButton('toggle');
-    assert.strictEqual($('#btn1').attr('aria-pressed'), 'true');
-  });
+  QUnit.test(
+    'should toggle aria-pressed on buttons with container',
+    function (assert) {
+      assert.expect(1);
+      var groupHTML =
+        '<div class="btn-group" data-toggle="buttons">' +
+        '<button id="btn1" class="btn btn-secondary" type="button">One</button>' +
+        '<button class="btn btn-secondary" type="button">Two</button>' +
+        '</div>';
+      $('#qunit-fixture').append(groupHTML);
+      $('#btn1').bootstrapButton('toggle');
+      assert.strictEqual($('#btn1').attr('aria-pressed'), 'true');
+    }
+  );
 
   QUnit.test(
     'should toggle aria-pressed when btn children are clicked',
