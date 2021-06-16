@@ -36,7 +36,7 @@ function Employees() {
   };
   if (data) {
     const { employees } = data;
-
+    console.log(employees);
     return (
       <div>
         <button className="button" onClick={handleOpenAddModal}>
@@ -104,7 +104,7 @@ function Employees() {
         )}
       </div>
     );
-    //} else if (loading) {
+  } else if (loading) {
     return <div>Loading</div>;
   } else if (error) {
     return <div>{error.message}</div>;
