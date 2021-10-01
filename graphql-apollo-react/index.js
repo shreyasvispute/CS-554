@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 const mongoCollections = require('./config/mongoCollections');
-const uuid = require('uuid');//for generating id's
+const uuid = require('uuid');//for generating _id's
 
 //Some Mock Data
 const employeeCollection = mongoCollections.employees;
@@ -11,19 +11,19 @@ const typeDefs = gql`
   type Query {
     employers: [Employer]
     employees: [Employee]
-    employer(id: Int): Employer
-    employee(id: String): Employee
+    employer(_id: Int): Employer
+    employee(_id: String): Employee
   }
 
   type Employer {
-    id: Int
+    _id: Int
     name: String
     employees: [Employee]
     numOfEmployees: Int
   }
 
   type Employee {
-    id: String
+    _id: String
     firstName: String
     lastName: String
     employer: Employer
@@ -35,9 +35,9 @@ const typeDefs = gql`
       lastName: String!
       employerId: Int!
     ): Employee
-    removeEmployee(id: String!): Employee
+    removeEmployee(_id: String!): Employee
     editEmployee(
-      id: String!
+      _id: String!
       firstName: String
       lastName: String
       employerId: Int
@@ -61,12 +61,12 @@ const resolvers = {
   Query: {
     employer: async (_, args) => {
       const employers = await employerCollection();
-      const employer = await employers.findOne({id: args.id});
+      const employer = await employers.findOne({_id: args._id});
       return employer;
     },
     employee: async (_, args) => {
       const employees = await employeeCollection();
-      const employee = await employees.findOne({id: args.id});
+      const employee = await employees.findOne({_id: args._id});
       return employee;
     },
     employers: async () => {
@@ -84,12 +84,12 @@ const resolvers = {
     numOfEmployees: async (parentValue) => {
       console.log(`parentValue in Employer`, parentValue);;
       const employees = await employeeCollection();
-      const numOfEmployees = await employees.count( { employerId: parentValue.id } );
+      const numOfEmployees = await employees.count( { employerId: parentValue._id } );
       return numOfEmployees;
     },
     employees: async (parentValue) => {
       const employees = await employeeCollection();
-      const employs = await employees.find( { employerId: parentValue.id } ).toArray();
+      const employs = await employees.find( { employerId: parentValue._id } ).toArray();
       return employs;
     }
   },
@@ -97,7 +97,7 @@ const resolvers = {
     employer: async (parentValue) => {
       //console.log(`parentValue in Employee`, parentValue);
       const employers = await employerCollection();
-      const employer = await employers.findOne( { id: parentValue.employerId } );
+      const employer = await employers.findOne( { _id: parentValue.employerId } );
       return employer;
     }
   },
@@ -105,7 +105,7 @@ const resolvers = {
     addEmployee: async (_, args) => {
       const employees = await employeeCollection();
       const newEmployee = {
-        id: uuid.v4(),
+        _id: uuid.v4(),
         firstName: args.firstName,
         lastName: args.lastName,
         employerId: args.employerId
@@ -115,16 +115,16 @@ const resolvers = {
     },
     removeEmployee: async (_, args) => {
       const employees = await employeeCollection();
-      const oldEmployee = await employees.findOne({id: args.id})
-      const deletionInfo = await employees.removeOne({id: args.id});
+      const oldEmployee = await employees.findOne({_id: args._id})
+      const deletionInfo = await employees.removeOne({_id: args._id});
       if (deletionInfo.deletedCount === 0) {
-        throw `Could not delete user with id of ${args.id}`;
+        throw `Could not delete user with _id of ${args._id}`;
       }
       return oldEmployee;
     },
     editEmployee: async (_, args) => {
       const employees = await employeeCollection();
-      let newEmployee = await employees.findOne({id: args.id});
+      let newEmployee = await employees.findOne({_id: args._id});
       if(newEmployee){
         if( args.firstName ){
           newEmployee.firstName = args.firstName;
@@ -139,7 +139,7 @@ const resolvers = {
             newEmployee.employerId = args.employerId;
           }
         }
-        await employees.updateOne({id: args.id}, {$set: newEmployee});
+        await employees.updateOne({_id: args._id}, {$set: newEmployee});
       }
       return newEmployee;
     },
@@ -147,7 +147,7 @@ const resolvers = {
       const employers = await employerCollection();
       const employerCount = await employers.count({});
       const newEmployer = {
-        id: employerCount + 1,
+        _id: employerCount + 1,
         name: args.name
       }
       await employers.insertOne(newEmployer);

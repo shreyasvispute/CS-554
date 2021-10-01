@@ -13,31 +13,31 @@ const main = async () => {
 
 	await employeeCollection.insertMany([//filler employee data
 		{
-			id: uuid.v4(),
+			_id: uuid.v4(),
 			firstName: 'Patrick',
 			lastName: 'Hill',
 			employerId: 1
 		},
 		{
-			id: uuid.v4(),
+			_id: uuid.v4(),
 			firstName: 'Jimi',
 			lastName: 'Hendrix',
 			employerId: 1
 		},
 		{
-			id: uuid.v4(),
+			_id: uuid.v4(),
 			firstName: 'Jim',
 			lastName: 'Morrison',
 			employerId: 2
 		},
 		{
-			id: uuid.v4(),
+			_id: uuid.v4(),
 			firstName: 'Roger',
 			lastName: 'Waters',
 			employerId: 1
 		},
 		{
-			id: uuid.v4(),
+			_id: uuid.v4(),
 			firstName: 'John',
 			lastName: 'Smith',
 			employerId: 2
@@ -45,15 +45,15 @@ const main = async () => {
 
 	await employerCollection.insertMany([//filler employer data
 		{
-		  id: 1,
+		  _id: 1,
 		  name: 'Stevens Institute of Technology'
 		},
 		{
-		  id: 2,
+		  _id: 2,
 		  name: 'Google'
 		},
 		{
-		  id: 3,
+		  _id: 3,
 		  name: 'Apple'
 		}
 	  ]);
