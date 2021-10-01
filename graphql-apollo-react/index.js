@@ -1,54 +1,11 @@
 const { ApolloServer, gql } = require('apollo-server');
+const mongoCollections = require('./config/mongoCollections');
 const lodash = require('lodash');
-const uuid = require('uuid');
-//some Mock data
-let employees = [
-  {
-    id: uuid.v4(),
-    firstName: 'Patrick',
-    lastName: 'Hill',
-    employerId: 1
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'Jimi',
-    lastName: 'Hendrix',
-    employerId: 1
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'Jim',
-    lastName: 'Morrison',
-    employerId: 2
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'Roger',
-    lastName: 'Waters',
-    employerId: 1
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'John',
-    lastName: 'Smith',
-    employerId: 2
-  }
-];
+const uuid = require('uuid');//for generating id's
 
-let employers = [
-  {
-    id: 1,
-    name: 'Stevens Institute of Technology'
-  },
-  {
-    id: 2,
-    name: 'Google'
-  },
-  {
-    id: 3,
-    name: 'Apple'
-  }
-];
+//Some Mock Data
+const employeeCollection = mongoCollections.employees;
+const employerCollection = mongoCollections.employers;
 
 //Create the type definitions for the query and our data
 const typeDefs = gql`
@@ -103,67 +60,98 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    employer: (_, args) => employers.filter((e) => e.id === args.id)[0],
-    employee: (_, args) => employees.filter((e) => e.id === args.id)[0],
-    employers: () => employers,
-    employees: () => employees
+    employer: (_, args) => {
+      return employerCollection().then((employers) => 
+        employers.findOne({id: args.id}));
+    },
+    employee: (_, args) => {
+      return employeeCollection().then((employees) => 
+        employees.findOne({id: args.id}));
+    },
+    employers: () => {
+      return employerCollection().then((employers) => 
+        employers.find({}).toArray());
+    },
+    employees: () => {
+      return employeeCollection().then((employees) => 
+        employees.find({}).toArray());
+    }
   },
   Employer: {
     numOfEmployees: (parentValue) => {
       console.log(`parentValue in Employer`, parentValue);
-      return employees.filter((e) => e.employerId === parentValue.id).length;
+      return employeeCollection().then((employees) => 
+        employees.count( { employerId: parentValue.id } ));
     },
     employees: (parentValue) => {
-      return employees.filter((e) => e.employerId === parentValue.id);
+      return employeeCollection().then((employees) => 
+        employees.find( { employerId: parentValue.id } ).toArray());
     }
   },
   Employee: {
     employer: (parentValue) => {
-      //console.log(`parentValue in Employee`, parentValue);
-      return employers.filter((e) => e.id === parentValue.employerId)[0];
+      return employerCollection().then((employers) => 
+        employers.findOne( { id: parentValue.employerId } ));
     }
   },
   Mutation: {
-    addEmployee: (_, args) => {
+    addEmployee:  (_, args) => {
       const newEmployee = {
         id: uuid.v4(),
         firstName: args.firstName,
         lastName: args.lastName,
         employerId: args.employerId
       };
-      employees.push(newEmployee);
-      return newEmployee;
+      return employeeCollection().then((employees) => {
+        employees.insertOne(newEmployee);
+        return newEmployee;
+      });
     },
     removeEmployee: (_, args) => {
-      return lodash.remove(employees, (e) => e.id == args.id)[0];
+      return employeeCollection().then((employees) => 
+        employees.findOne({id: args.id}).then((oldEmployee) => {
+        console.log("Removing Employee: "+ JSON.stringify(oldEmployee));
+        employees.removeOne({id: args.id})
+        return oldEmployee;
+         })
+      );
     },
-    editEmployee: (_, args) => {
-      let newEmployee;
-      employees = employees.map((e) => {
-        if (e.id === args.id) {
-          if (args.firstName) {
-            e.firstName = args.firstName;
-          }
-          if (args.lastName) {
-            e.lastName = args.lastName;
-          }
-          if (args.employerId) {
-            e.employerId = args.employerId;
-          }
-          newEmployee = e;
-          return e;
-        }
-        return e;
-      });
-      return newEmployee;
+    editEmployee: async (_, args) => {
+      return employeeCollection().then((employees) =>
+        employees.findOne({id: args.id}).then((newEmployee) => {
+          if(newEmployee){
+              if( args.firstName ){
+                newEmployee.firstName = args.firstName;
+              }
+              if( args.lastName ){
+                newEmployee.lastName = args.lastName;
+              }
+              if( args.employerId ){
+                employerCollection().then((employers) =>
+                  employers.count({}).then((employerCount) => {
+                    if(employerCount+1 >= args.employerId){
+                      newEmployee.employerId = args.employerId;
+                    }
+                  }))
+              }
+              return employees.updateOne({id: args.id}, {$set: newEmployee}).then(() => newEmployee);
+            }
+            return newEmployee;
+        })
+
+      );
     },
     addEmployer: (_, args) => {
-      const newEmployer = {
-        id: employers.length + 1,
-        name: args.name
-      };
-      employers.push(newEmployer);
-      return newEmployer;
+      return employerCollection().then((employers) => 
+        employers.count({}).then((employerCount) => {
+          const newEmployer = {
+            id: employerCount + 1,
+            name: args.name
+          }
+          employers.insertOne(newEmployer)
+          return newEmployer;
+        })
+      );
     }
   }
 };
