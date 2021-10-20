@@ -35,7 +35,7 @@ function Employers() {
         <div>
           {employers.map((employer) => {
             return (
-              <div className="card" key={employer.id}>
+              <div className="card" key={employer._id}>
                 <div className="card-body">
                   <h5 className="card-title">{employer.name}</h5>
                   <span>Number of Employees:</span> {employer.numOfEmployees}
@@ -46,7 +46,7 @@ function Employers() {
                   <ol>
                     {employer.employees.map((employee) => {
                       return (
-                        <li key={employee.id}>
+                        <li key={employee._id}>
                           {employee.firstName} {employee.lastName}
                         </li>
                       );

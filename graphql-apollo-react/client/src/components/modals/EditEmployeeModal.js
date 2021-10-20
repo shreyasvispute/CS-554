@@ -64,7 +64,7 @@ function EditEmployeeModal(props) {
             e.preventDefault();
             editEmployee({
               variables: {
-                id: props.employee.id,
+                id: props.employee._id,
                 firstName: firstName.value,
                 lastName: lastName.value,
                 employerId: parseInt(employerId.value)
@@ -111,7 +111,7 @@ function EditEmployeeModal(props) {
             <label>
               Employer:
               <select
-                defaultValue={employee.employer.id}
+                defaultValue={employee.employer._id}
                 className="form-control"
                 ref={(node) => {
                   employerId = node;
@@ -120,7 +120,7 @@ function EditEmployeeModal(props) {
                 {employers &&
                   employers.map((employer) => {
                     return (
-                      <option key={employer.id} value={employer.id}>
+                      <option key={employer._id} value={employer._id}>
                         {employer.name}
                       </option>
                     );

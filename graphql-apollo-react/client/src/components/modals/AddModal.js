@@ -122,7 +122,7 @@ function AddModal(props) {
               {employers &&
                 employers.map((employer) => {
                   return (
-                    <option key={employer.id} value={employer.id}>
+                    <option key={employer._id} value={employer._id}>
                       {employer.name}
                     </option>
                   );
