@@ -34,7 +34,7 @@ function DeleteEmployeeModal(props) {
       cache.writeQuery({
         query: queries.GET_EMPLOYEES,
         data: {
-          employees: employees.filter((e) => e.id !== employee.id)
+          employees: employees.filter((e) => e._id !== employee._id)
         }
       });
     }
@@ -75,7 +75,7 @@ function DeleteEmployeeModal(props) {
               e.preventDefault();
               removeEmployee({
                 variables: {
-                  id: employee.id
+                  id: employee._id
                 }
               });
               setShowDeleteModal(false);

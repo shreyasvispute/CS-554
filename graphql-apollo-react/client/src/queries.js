@@ -3,12 +3,12 @@ import { gql } from '@apollo/client';
 const GET_EMPLOYEES = gql`
   query {
     employees {
-      id
+      _id
       firstName
       lastName
       employer {
         name
-        id
+        _id
       }
     }
   }
@@ -18,7 +18,7 @@ const GET_EMPLOYERS = gql`
   query {
     employers {
       name
-      id
+      _id
     }
   }
 `;
@@ -26,11 +26,11 @@ const GET_EMPLOYERS = gql`
 const GET_EMPLOYERS_WITH_EMPLOYEES = gql`
   query {
     employers {
-      id
+      _id
       name
       numOfEmployees
       employees {
-        id
+        _id
         firstName
         lastName
       }
@@ -49,12 +49,12 @@ const ADD_EMPLOYEE = gql`
       lastName: $lastName
       employerId: $employerId
     ) {
-      id
+      _id
       firstName
       lastName
       employer {
         name
-        id
+        _id
       }
     }
   }
@@ -63,13 +63,13 @@ const ADD_EMPLOYEE = gql`
 const ADD_EMPLOYER = gql`
   mutation createEmployer($name: String!) {
     addEmployer(name: $name) {
-      id
+      _id
       name
       numOfEmployees
       employees {
         firstName
         lastName
-        id
+        _id
       }
     }
   }
@@ -77,13 +77,13 @@ const ADD_EMPLOYER = gql`
 
 const DELETE_EMPLOYEE = gql`
   mutation deleteEmployee($id: String!) {
-    removeEmployee(id: $id) {
-      id
+    removeEmployee(_id: $id) {
+      _id
       firstName
       lastName
       employer {
         name
-        id
+        _id
       }
     }
   }
@@ -97,16 +97,16 @@ const EDIT_EMPLOYEE = gql`
     $employerId: Int
   ) {
     editEmployee(
-      id: $id
+      _id: $id
       employerId: $employerId
       firstName: $firstName
       lastName: $lastName
     ) {
-      id
+      _id
       firstName
       lastName
       employer {
-        id
+        _id
         name
       }
     }

@@ -1,73 +1,29 @@
 const { ApolloServer, gql } = require('apollo-server');
-const lodash = require('lodash');
-const uuid = require('uuid');
-//some Mock data
-let employees = [
-  {
-    id: uuid.v4(),
-    firstName: 'Patrick',
-    lastName: 'Hill',
-    employerId: 1
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'Jimi',
-    lastName: 'Hendrix',
-    employerId: 1
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'Jim',
-    lastName: 'Morrison',
-    employerId: 2
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'Roger',
-    lastName: 'Waters',
-    employerId: 1
-  },
-  {
-    id: uuid.v4(),
-    firstName: 'John',
-    lastName: 'Smith',
-    employerId: 2
-  }
-];
+const mongoCollections = require('./config/mongoCollections');
+const uuid = require('uuid');//for generating _id's
 
-let employers = [
-  {
-    id: 1,
-    name: 'Stevens Institute of Technology'
-  },
-  {
-    id: 2,
-    name: 'Google'
-  },
-  {
-    id: 3,
-    name: 'Apple'
-  }
-];
+//Some Mock Data
+const employeeCollection = mongoCollections.employees;
+const employerCollection = mongoCollections.employers;
 
 //Create the type definitions for the query and our data
 const typeDefs = gql`
   type Query {
     employers: [Employer]
     employees: [Employee]
-    employer(id: Int): Employer
-    employee(id: String): Employee
+    employer(_id: Int): Employer
+    employee(_id: String): Employee
   }
 
   type Employer {
-    id: Int
+    _id: Int
     name: String
     employees: [Employee]
     numOfEmployees: Int
   }
 
   type Employee {
-    id: String
+    _id: String
     firstName: String
     lastName: String
     employer: Employer
@@ -79,9 +35,9 @@ const typeDefs = gql`
       lastName: String!
       employerId: Int!
     ): Employee
-    removeEmployee(id: String!): Employee
+    removeEmployee(_id: String!): Employee
     editEmployee(
-      id: String!
+      _id: String!
       firstName: String
       lastName: String
       employerId: Int
@@ -103,66 +59,98 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    employer: (_, args) => employers.filter((e) => e.id === args.id)[0],
-    employee: (_, args) => employees.filter((e) => e.id === args.id)[0],
-    employers: () => employers,
-    employees: () => employees
+    employer: async (_, args) => {
+      const employers = await employerCollection();
+      const employer = await employers.findOne({_id: args._id});
+      return employer;
+    },
+    employee: async (_, args) => {
+      const employees = await employeeCollection();
+      const employee = await employees.findOne({_id: args._id});
+      return employee;
+    },
+    employers: async () => {
+      const employers = await employerCollection();
+      const allEmployers = await employers.find({}).toArray();
+      return allEmployers;
+    },
+    employees: async () => {
+      const employees = await employeeCollection();
+      const allEmployees = await employees.find({}).toArray();
+      return allEmployees;
+    }
   },
   Employer: {
-    numOfEmployees: (parentValue) => {
-      console.log(`parentValue in Employer`, parentValue);
-      return employees.filter((e) => e.employerId === parentValue.id).length;
+    numOfEmployees: async (parentValue) => {
+      console.log(`parentValue in Employer`, parentValue);;
+      const employees = await employeeCollection();
+      const numOfEmployees = await employees.count( { employerId: parentValue._id } );
+      return numOfEmployees;
     },
-    employees: (parentValue) => {
-      return employees.filter((e) => e.employerId === parentValue.id);
+    employees: async (parentValue) => {
+      const employees = await employeeCollection();
+      const employs = await employees.find( { employerId: parentValue._id } ).toArray();
+      return employs;
     }
   },
   Employee: {
-    employer: (parentValue) => {
+    employer: async (parentValue) => {
       //console.log(`parentValue in Employee`, parentValue);
-      return employers.filter((e) => e.id === parentValue.employerId)[0];
+      const employers = await employerCollection();
+      const employer = await employers.findOne( { _id: parentValue.employerId } );
+      return employer;
     }
   },
   Mutation: {
-    addEmployee: (_, args) => {
+    addEmployee: async (_, args) => {
+      const employees = await employeeCollection();
       const newEmployee = {
-        id: uuid.v4(),
+        _id: uuid.v4(),
         firstName: args.firstName,
         lastName: args.lastName,
         employerId: args.employerId
       };
-      employees.push(newEmployee);
+      await employees.insertOne(newEmployee);
       return newEmployee;
     },
-    removeEmployee: (_, args) => {
-      return lodash.remove(employees, (e) => e.id == args.id)[0];
+    removeEmployee: async (_, args) => {
+      const employees = await employeeCollection();
+      const oldEmployee = await employees.findOne({_id: args._id})
+      const deletionInfo = await employees.removeOne({_id: args._id});
+      if (deletionInfo.deletedCount === 0) {
+        throw `Could not delete user with _id of ${args._id}`;
+      }
+      return oldEmployee;
     },
-    editEmployee: (_, args) => {
-      let newEmployee;
-      employees = employees.map((e) => {
-        if (e.id === args.id) {
-          if (args.firstName) {
-            e.firstName = args.firstName;
-          }
-          if (args.lastName) {
-            e.lastName = args.lastName;
-          }
-          if (args.employerId) {
-            e.employerId = args.employerId;
-          }
-          newEmployee = e;
-          return e;
+    editEmployee: async (_, args) => {
+      const employees = await employeeCollection();
+      let newEmployee = await employees.findOne({_id: args._id});
+      if(newEmployee){
+        if( args.firstName ){
+          newEmployee.firstName = args.firstName;
         }
-        return e;
-      });
+        if( args.lastName ){
+          newEmployee.lastName = args.lastName;
+        }
+        if( args.employerId && args.employerId > 0){
+          const employers = await employerCollection()
+            const employerCount = await employers.count({});
+          if(employerCount+1 >= args.employerId){
+            newEmployee.employerId = args.employerId;
+          }
+        }
+        await employees.updateOne({_id: args._id}, {$set: newEmployee});
+      }
       return newEmployee;
     },
-    addEmployer: (_, args) => {
+    addEmployer: async (_, args) => {
+      const employers = await employerCollection();
+      const employerCount = await employers.count({});
       const newEmployer = {
-        id: employers.length + 1,
+        _id: employerCount + 1,
         name: args.name
-      };
-      employers.push(newEmployer);
+      }
+      await employers.insertOne(newEmployer);
       return newEmployer;
     }
   }
