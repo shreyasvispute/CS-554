@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Counter from './Counter';
+import CounterContainer from './CounterContainer';
 
 function App() {
-  const [counter, setCouter] = useState(0);
+	const [ counter, setCouter ] = useState(0);
+	let foo = 'bar';
+	const setCounterState = (count) => {
+		console.log('in App setCounterState', count);
 
-  const setCounterState = (count) => {
-    console.log('in App setCounterState', count);
-
-    setCouter(count);
-  };
-  return (
-    <div className="App">
-      App Component: {counter}
-      <br />
-      <Counter setCounterState={setCounterState} />
-    </div>
-  );
+		setCouter(count);
+	};
+	return (
+		<div className='App'>
+			Foo: {foo}
+			<br />
+			App Component Count State: {counter}
+			<br />
+			<CounterContainer liftState={setCounterState} foo={foo} />
+		</div>
+	);
 }
 
 export default App;
