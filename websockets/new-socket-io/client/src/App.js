@@ -8,25 +8,25 @@ function App() {
 
 	const socketRef = useRef();
 
+	useEffect(() => {
+		socketRef.current = io('/');
+		return () => {
+			socketRef.current.disconnect();
+		};
+	}, []);
+
 	useEffect(
 		() => {
-			socketRef.current = io.connect('http://localhost:4000');
 			socketRef.current.on('message', ({ name, message }) => {
 				setChat([ ...chat, { name, message } ]);
 			});
 			socketRef.current.on('user_join', function(data) {
 				setChat([ ...chat, { name: 'ChatBot', message: `${data} has joined the chat` } ]);
 			});
-			// socketRef.current.on('user_leave', function(data) {
-			// 	console.log('data', data);
-			// 	//setChat([ ...chat, { name: 'ChatBot', message: data } ]);
-			// });
-			return () => {
-				socketRef.current.disconnect();
-			};
 		},
 		[ chat ]
 	);
+
 	const userjoin = (name) => {
 		socketRef.current.emit('user_join', name);
 	};
