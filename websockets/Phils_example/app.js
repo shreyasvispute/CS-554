@@ -8,35 +8,35 @@ const chat = io.of('/chat');
 const usersToSocket = {};
 
 app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 chat.on('connection', (socket) => {
-	socket.on('join-room', (data) => {
-		socket.leave(data.previousRoom);
-		socket.join(data.newRoom);
-		console.log(`joined room ${data.newRoom}`);
-		socket.emit('joined-room', data.newRoom);
-	});
+  socket.on('join-room', (data) => {
+    socket.leave(data.previousRoom);
+    socket.join(data.newRoom);
+    console.log(`joined room ${data.newRoom}`);
+    socket.emit('joined-room', data.newRoom);
+  });
 
-	socket.on('direct message', (msg) => {
-		usersToSocket[msg.userName].emit('private message', {
-			from: msg.fromUserName,
-			text: msg.text
-		});
-	});
+  socket.on('direct message', (msg) => {
+    usersToSocket[msg.userName].emit('private message', {
+      from: msg.fromUserName,
+      text: msg.text
+    });
+  });
 
-	socket.on('setup', (connectionInfo) => {
-		usersToSocket[connectionInfo.nickname] = socket;
-	});
+  socket.on('setup', (connectionInfo) => {
+    usersToSocket[connectionInfo.nickname] = socket;
+  });
 
-	socket.on('send-message', (msg) => {
-		chat.to(msg.room).emit('receive-message', msg.text);
-	});
+  socket.on('send-message', (msg) => {
+    chat.to(msg.room).emit('receive-message', msg.text);
+  });
 
-	socket.emit('request-credentials');
+  socket.emit('request-credentials');
 });
 
 http.listen(3000, () => {
-	console.log('listening on http://localhost:3000');
+  console.log('listening on http://localhost:3000');
 });

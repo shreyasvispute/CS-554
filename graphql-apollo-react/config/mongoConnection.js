@@ -1,8 +1,8 @@
-const MongoClient = require("mongodb").MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
 const mongoConfig = {
-  serverUrl: "mongodb://localhost:27017/",
-  database: "graphql-apollo-react"
+  serverUrl: 'mongodb://localhost:27017/',
+  database: 'graphql-apollo-react'
 };
 
 let _connection = undefined;
