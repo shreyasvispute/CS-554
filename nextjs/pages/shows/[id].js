@@ -4,67 +4,46 @@ import { getStaticProps as ShowProps } from './index';
 import Image from 'next/image';
 
 export default function show({ data }) {
-  return (
-    <Layout>
-      <div>
-        <h1>{data.name} </h1>
-        <p>
-          {data.summary
-            ? data.summary.replace(/(<([^>]+)>)/gi, '')
-            : 'No Summary'}
-        </p>
+	return (
+		<Layout>
+			<div>
+				<h1>{data.name} </h1>
+				<p>{data.summary ? data.summary.replace(/(<([^>]+)>)/gi, '') : 'No Summary'}</p>
 
-        <Image
-          src={
-            data.image
-              ? data.image.medium
-              : 'https://patrickhill.nyc/images/me.jpg'
-          }
-          height={294}
-          width={209}
-        />
-      </div>
+				<Image
+					src={data.image ? data.image.medium : 'https://patrickhill.nyc/images/me.jpg'}
+					height={294}
+					width={209}
+				/>
+			</div>
 
-      <style jsx>{`
-        p::first-letter {
-          font-size: 200%;
-        }
-      `}</style>
-    </Layout>
-  );
+			<style jsx>{`
+				p::first-letter {
+					font-size: 200%;
+				}
+			`}</style>
+		</Layout>
+	);
 }
 
 export async function getStaticProps({ params }) {
-  const { data } = await axios.get('http://api.tvmaze.com/shows/' + params.id);
-  console.log(`Fetched a show: ${data.name}`);
-  return {
-    props: { data }
-  };
+	const { data } = await axios.get('http://api.tvmaze.com/shows/' + params.id);
+	console.log(`Fetched a show: ${data.name}`);
+	return {
+		props: { data }
+	};
 }
 
 export async function getStaticPaths() {
-  const { data } = await axios.get('http://api.tvmaze.com/shows');
-  const paths = data.map((show) => {
-    return {
-      params: { id: show.id.toString() }
-    };
-  });
+	const { data } = await axios.get('http://api.tvmaze.com/shows');
+	const paths = data.map((show) => {
+		return {
+			params: { id: show.id.toString() }
+		};
+	});
 
-  return {
-    paths: paths,
-    fallback: false
-  };
+	return {
+		paths: paths,
+		fallback: false
+	};
 }
-
-// export async function getServerSideProps(context) {
-// 	// console.log(context);
-// 	const { id } = context.query;
-// 	console.log(id);
-
-// 	const { data } = await axios.get('http://api.tvmaze.com/shows/' + id);
-// 	console.log(`Fetched a show: ${data.name}`);
-// 	return {
-// 		props: { showData: data }
-// 	};
-// }
-// export default Show;
