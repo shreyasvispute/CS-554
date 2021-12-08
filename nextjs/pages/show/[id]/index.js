@@ -1,22 +1,24 @@
 import Layout from '../../../components/MyLayout';
 import axios from 'axios';
-import Link from 'next/link';
-const Show = (props) => {
+import Image from 'next/image';
+export default function show({ data }) {
   return (
     <Layout>
       <div>
-        <h1>{props.show.name} </h1>
+        <h1>{data.name} </h1>
         <p>
-          {props.show.summary
-            ? props.show.summary.replace(/(<([^>]+)>)/gi, '')
+          {data.summary
+            ? data.summary.replace(/(<([^>]+)>)/gi, '')
             : 'No Summary'}
         </p>
-        <img
+        <Image
           src={
-            props.show.image
-              ? props.show.image.medium
+            data.image
+              ? data.image.medium
               : 'https://patrickhill.nyc/images/me.jpg'
           }
+          height={294}
+          width={209}
         />
       </div>
 
@@ -27,14 +29,16 @@ const Show = (props) => {
       `}</style>
     </Layout>
   );
-};
+}
 
-Show.getInitialProps = async (context) => {
-  console.log(context);
+export async function getServerSideProps(context) {
+  // console.log(context);
   const { id } = context.query;
+  console.log(id);
+
   const { data } = await axios.get('http://api.tvmaze.com/shows/' + id);
   console.log(`Fetched a show: ${data.name}`);
-
-  return { show: data };
-};
-export default Show;
+  return {
+    props: { data }
+  };
+}
