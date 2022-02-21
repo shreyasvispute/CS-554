@@ -1,6 +1,5 @@
 import Layout from '../../components/MyLayout';
 import axios from 'axios';
-import { getStaticProps as ShowProps } from './index';
 import Image from 'next/image';
 
 export default function show({ data }) {
