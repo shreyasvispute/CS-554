@@ -10,7 +10,7 @@ bluebird.promisifyAll(redis.Multi.prototype);
 const makeTestPromise = () => {
   return new Promise((fulfill, reject) => {
     setTimeout(() => {
-      fulfill({ status: 'Good' });
+      fulfill({status: 'Good'});
     }, 5000);
   });
 };
