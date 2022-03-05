@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const SearchShows = (props) => {
   const handleChange = (e) => {
@@ -6,19 +6,19 @@ const SearchShows = (props) => {
   };
   return (
     <form
-      method='POST '
+      method="POST "
       onSubmit={(e) => {
         e.preventDefault();
       }}
-      name='formName'
-      className='center'
+      name="formName"
+      className="center"
     >
       <label>
         <span>Search Shows: </span>
         <input
-          autoComplete='off'
-          type='text'
-          name='searchTerm'
+          autoComplete="off"
+          type="text"
+          name="searchTerm"
           onChange={handleChange}
         />
       </label>
